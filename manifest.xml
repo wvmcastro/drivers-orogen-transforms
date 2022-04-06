@@ -1,0 +1,10 @@
+<package>
+  <description brief="Generic transformer-related packages for Rock">
+      This package defines components that provide some useful transformations.
+      They are not defined in drivers/orogen/transformer because they actually
+      require drivrs/orogen/transformer to be installed (for its orogen plugin)
+  </description>
+  <author>TideWise SW Team/teams-sw@tidewise.io</author>
+  <license>LGPLv2</license>
+  <depend package="drivers/orogen/transformer" />
+</package>
