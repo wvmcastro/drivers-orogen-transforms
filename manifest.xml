@@ -6,5 +6,7 @@
   </description>
   <author>TideWise SW Team/teams-sw@tidewise.io</author>
   <license>LGPLv2</license>
+
   <depend package="drivers/orogen/transformer" />
+  <test_depend package="tools/syskit" />
 </package>
