@@ -39,7 +39,8 @@ void PoseAndTwistFrameChangeRBSTask::source2ref_samplesTransformerCallback(
     target2ref_rbs.position = target2ref.translation();
     target2ref_rbs.orientation = target2ref.rotation();
     target2ref_rbs.velocity = source2ref_rbs.velocity + induced_velocity_ref;
-    target2ref_rbs.angular_velocity = source2ref_rbs.angular_velocity;
+    target2ref_rbs.angular_velocity =
+        source2target_pose.rotation() * source2ref_rbs.angular_velocity;
     _target2ref_samples.write(target2ref_rbs);
 }
 
