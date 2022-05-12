@@ -28,7 +28,7 @@ void PoseAndTwistFrameChangeRBSTask::source2ref_samplesTransformerCallback(
     Eigen::Affine3d target2ref = source2ref * source2target_pose.inverse();
 
     Eigen::Vector3d induced_velocity_ref =
-        source2ref_rbs.angular_velocity
+        (source2ref_rbs.orientation * source2ref_rbs.angular_velocity)
         .cross(source2ref_rot * source2target_pose.inverse().translation());
 
     base::samples::RigidBodyState target2ref_rbs;

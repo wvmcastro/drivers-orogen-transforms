@@ -35,7 +35,30 @@ describe OroGen.transforms.PoseAndTwistFrameChangeRBSTask do
         @source2ref.position = Eigen::Vector3.new(rand, rand, rand)
         @source2ref.orientation = Eigen::Quaternion.Identity
         @source2ref.velocity = Eigen::Vector3.new(rand, rand, rand)
-        @source2ref.angular_velocity = Eigen::Vector3.new(1, 0, 0)
+        @source2ref.angular_velocity = Eigen::Vector3.UnitX
+
+        target2ref =
+            expect_execution { syskit_write @task.source2ref_samples_port, @source2ref }
+            .to { have_one_new_sample task.target2ref_samples_port }
+
+        assert_eigen_approx @source2ref.position + Eigen::Vector3.UnitY, target2ref.position
+        assert_eigen_approx @source2ref.orientation, target2ref.orientation
+        assert_eigen_approx @source2ref.velocity + Eigen::Vector3.UnitZ,
+                            target2ref.velocity
+        assert_eigen_approx @source2ref.angular_velocity, target2ref.angular_velocity
+    end
+
+    it "interprets the angular velocity vector in the source frame" do
+        source2ref_q = Eigen::Quaternion.from_angle_axis(
+            Math::PI / 2, Eigen::Vector3.UnitY
+        )
+        configure_target2source translation: Eigen::Vector3.UnitY
+        syskit_configure_and_start @task
+
+        @source2ref.position = Eigen::Vector3.new(rand, rand, rand)
+        @source2ref.orientation = source2ref_q
+        @source2ref.velocity = Eigen::Vector3.new(rand, rand, rand)
+        @source2ref.angular_velocity = Eigen::Vector3.UnitZ
 
         target2ref =
             expect_execution { syskit_write @task.source2ref_samples_port, @source2ref }
