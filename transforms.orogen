@@ -35,3 +35,19 @@ task_context "PoseAndTwistFrameChangeRBSTask" do
 
     port_driven
 end
+
+# Task that takes two poses relative to a single reference and outputs the one
+# relative to the other
+#
+# 'newref' is considered fixed in 'ref' for this calculation. That is, the
+# linear velocity is rotated to match b's orientation, but the velocities are
+# not combined
+task_context "PoseCombinationRBSTask" do
+    needs_configuration
+
+    input_port "object2ref_pose", "/base/samples/RigidBodyState"
+    input_port "newref2ref_pose", "/base/samples/RigidBodyState"
+
+    output_port "object2newref_pose", "/base/samples/RigidBodyState"
+    port_driven
+end
