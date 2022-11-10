@@ -36,6 +36,26 @@ task_context "PoseAndTwistFrameChangeRBSTask" do
     port_driven
 end
 
+# 
+task_context "PoseAndTwistReferenceChangeRBSTask" do
+    needs_configuration
+
+    # The pose+velocity of the source frame w.r.t. the reference frame
+    input_port "source2ref_samples", "/base/samples/RigidBodyState"
+
+    # The pose+velocity of the source frame w.r.t. the new reference frame
+    output_port "source2new_ref_samples", "/base/samples/RigidBodyState"
+
+    transformer do
+        transform "source", "new_ref"
+        align_port "source2ref_samples"
+        # Note: will have to be configured in the component's configuration file
+        max_latency 1
+    end
+
+    port_driven
+end
+
 # Task that takes two poses relative to a single reference and outputs the one
 # relative to the other
 #
