@@ -36,8 +36,7 @@ task_context "PoseAndTwistFrameChangeRBSTask" do
     port_driven
 end
 
-# 
-task_context "PoseAndTwistReferenceChangeRBSTask" do
+task_context "PoseReferenceChangeRBSTask" do
     needs_configuration
 
     # The pose+velocity of the source frame w.r.t. the reference frame
@@ -47,7 +46,7 @@ task_context "PoseAndTwistReferenceChangeRBSTask" do
     output_port "source2new_ref_samples", "/base/samples/RigidBodyState"
 
     transformer do
-        transform "source", "new_ref"
+        transform "new_ref", "ref"
         align_port "source2ref_samples"
         # Note: will have to be configured in the component's configuration file
         max_latency 1
