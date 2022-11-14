@@ -1,33 +1,26 @@
 /* Generated from orogen/lib/orogen/templates/tasks/Task.cpp */
 
-#include "PoseAndTwistReferenceChangeRBSTask.hpp"
+#include "PoseReferenceChangeRBSTask.hpp"
 
 using namespace transforms;
 
-PoseAndTwistReferenceChangeRBSTask::PoseAndTwistReferenceChangeRBSTask(std::string const& name)
-    : PoseAndTwistReferenceChangeRBSTaskBase(name)
+PoseReferenceChangeRBSTask::PoseReferenceChangeRBSTask(std::string const& name)
+    : PoseReferenceChangeRBSTaskBase(name)
 {
 }
 
-PoseAndTwistReferenceChangeRBSTask::~PoseAndTwistReferenceChangeRBSTask()
+PoseReferenceChangeRBSTask::~PoseReferenceChangeRBSTask()
 {
 }
 
-void PoseAndTwistReferenceChangeRBSTask::source2ref_samplesTransformerCallback(const base::Time &ts, const ::base::samples::RigidBodyState &source2ref_rbs)
+void PoseReferenceChangeRBSTask::source2ref_samplesTransformerCallback(const base::Time &ts, const ::base::samples::RigidBodyState &source2ref_rbs)
 {
     Eigen::Affine3d new_ref2ref_pose;
     if (!_new_ref2ref.get(ts, new_ref2ref_pose, false)) {
         return;
     }
 
-    Eigen::Affine3d source2ref = source2ref_rbs;
-    auto source2ref_rot = source2ref.rotation();
-    Eigen::Affine3d source2new_ref = new_ref2ref_pose.inverse() * source2ref;
-
-    // TODO: Add velocity and angular_velocity
-    // Eigen::Vector3d induced_velocity_ref =
-    //     (source2ref_rbs.orientation * source2ref_rbs.angular_velocity)
-    //     .cross( new_ref2ref_pose.inverse().translation() * source2ref_rot);
+    Eigen::Affine3d source2new_ref = new_ref2ref_pose.inverse() * source2ref_rbs;
 
     base::samples::RigidBodyState source2new_ref_rbs;
     source2new_ref_rbs.time = source2ref_rbs.time;
@@ -36,41 +29,38 @@ void PoseAndTwistReferenceChangeRBSTask::source2ref_samplesTransformerCallback(c
 
     source2new_ref_rbs.position = source2new_ref.translation();
     source2new_ref_rbs.orientation = source2new_ref.rotation();
-    // source2new_ref_rbs.velocity = source2ref_rbs.velocity + induced_velocity_ref;
-    // source2new_ref_rbs.angular_velocity =
-    //     source2target_pose.rotation() * source2ref_rbs.angular_velocity;
     _source2new_ref_samples.write(source2new_ref_rbs);
 }
 
 /// The following lines are template definitions for the various state machine
-// hooks defined by Orocos::RTT. See PoseAndTwistReferenceChangeRBSTask.hpp for more detailed
+// hooks defined by Orocos::RTT. See PoseReferenceChangeRBSTask.hpp for more detailed
 // documentation about them.
 
-bool PoseAndTwistReferenceChangeRBSTask::configureHook()
+bool PoseReferenceChangeRBSTask::configureHook()
 {
-    if (! PoseAndTwistReferenceChangeRBSTaskBase::configureHook())
+    if (! PoseReferenceChangeRBSTaskBase::configureHook())
         return false;
     return true;
 }
-bool PoseAndTwistReferenceChangeRBSTask::startHook()
+bool PoseReferenceChangeRBSTask::startHook()
 {
-    if (! PoseAndTwistReferenceChangeRBSTaskBase::startHook())
+    if (! PoseReferenceChangeRBSTaskBase::startHook())
         return false;
     return true;
 }
-void PoseAndTwistReferenceChangeRBSTask::updateHook()
+void PoseReferenceChangeRBSTask::updateHook()
 {
-    PoseAndTwistReferenceChangeRBSTaskBase::updateHook();
+    PoseReferenceChangeRBSTaskBase::updateHook();
 }
-void PoseAndTwistReferenceChangeRBSTask::errorHook()
+void PoseReferenceChangeRBSTask::errorHook()
 {
-    PoseAndTwistReferenceChangeRBSTaskBase::errorHook();
+    PoseReferenceChangeRBSTaskBase::errorHook();
 }
-void PoseAndTwistReferenceChangeRBSTask::stopHook()
+void PoseReferenceChangeRBSTask::stopHook()
 {
-    PoseAndTwistReferenceChangeRBSTaskBase::stopHook();
+    PoseReferenceChangeRBSTaskBase::stopHook();
 }
-void PoseAndTwistReferenceChangeRBSTask::cleanupHook()
+void PoseReferenceChangeRBSTask::cleanupHook()
 {
-    PoseAndTwistReferenceChangeRBSTaskBase::cleanupHook();
+    PoseReferenceChangeRBSTaskBase::cleanupHook();
 }

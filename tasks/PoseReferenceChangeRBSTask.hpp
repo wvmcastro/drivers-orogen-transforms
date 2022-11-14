@@ -1,13 +1,13 @@
 /* Generated from orogen/lib/orogen/templates/tasks/Task.hpp */
 
-#ifndef TRANSFORMS_POSEANDTWISTREFERENCECHANGERBSTASK_TASK_HPP
-#define TRANSFORMS_POSEANDTWISTREFERENCECHANGERBSTASK_TASK_HPP
+#ifndef TRANSFORMS_POSEREFERENCECHANGERBSTASK_TASK_HPP
+#define TRANSFORMS_POSEREFERENCECHANGERBSTASK_TASK_HPP
 
-#include "transforms/PoseAndTwistReferenceChangeRBSTaskBase.hpp"
+#include "transforms/PoseReferenceChangeRBSTaskBase.hpp"
 
 namespace transforms {
 
-    /*! \class PoseAndTwistReferenceChangeRBSTask
+    /*! \class PoseReferenceChangeRBSTask
      * \brief The task context provides and requires services. It uses an ExecutionEngine
      to perform its functions.
      * Essential interfaces are operations, data flow ports and properties. These
@@ -19,32 +19,32 @@ namespace transforms {
      * The name of a TaskContext is primarily defined via:
      \verbatim
      deployment 'deployment_name'
-         task('custom_task_name','transforms::PoseAndTwistReferenceChangeRBSTask')
+         task('custom_task_name','transforms::PoseReferenceChangeRBSTask')
      end
      \endverbatim
      *  It can be dynamically adapted when the deployment is called with a prefix
      argument.
      */
-    class PoseAndTwistReferenceChangeRBSTask
-        : public PoseAndTwistReferenceChangeRBSTaskBase {
-        friend class PoseAndTwistReferenceChangeRBSTaskBase;
+    class PoseReferenceChangeRBSTask
+        : public PoseReferenceChangeRBSTaskBase {
+        friend class PoseReferenceChangeRBSTaskBase;
 
     protected:
         virtual void source2ref_samplesTransformerCallback(const base::Time& ts,
             const ::base::samples::RigidBodyState& source2ref_rbs);
 
     public:
-        /** TaskContext constructor for PoseAndTwistReferenceChangeRBSTask
+        /** TaskContext constructor for PoseReferenceChangeRBSTask
          * \param name Name of the task. This name needs to be unique to make it
          * identifiable via nameservices. \param initial_state The initial TaskState of
          * the TaskContext. Default is Stopped state.
          */
-        PoseAndTwistReferenceChangeRBSTask(
-            std::string const& name = "transforms::PoseAndTwistReferenceChangeRBSTask");
+        PoseReferenceChangeRBSTask(
+            std::string const& name = "transforms::PoseReferenceChangeRBSTask");
 
-        /** Default deconstructor of PoseAndTwistReferenceChangeRBSTask
+        /** Default deconstructor of PoseReferenceChangeRBSTask
          */
-        ~PoseAndTwistReferenceChangeRBSTask();
+        ~PoseReferenceChangeRBSTask();
 
         /** This hook is called by Orocos when the state machine transitions
          * from PreOperational to Stopped. If it returns false, then the
