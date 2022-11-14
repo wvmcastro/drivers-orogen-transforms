@@ -36,13 +36,16 @@ task_context "PoseAndTwistFrameChangeRBSTask" do
     port_driven
 end
 
+# Task that changes the reference frame of a pose expressed as RigidBodyState
+#
+# This task changes the reference frame of a RBS, keeping the source frame the same.
 task_context "PoseReferenceChangeRBSTask" do
     needs_configuration
 
-    # The pose+velocity of the source frame w.r.t. the reference frame
+    # The pose of the source frame w.r.t. the reference frame
     input_port "source2ref_samples", "/base/samples/RigidBodyState"
 
-    # The pose+velocity of the source frame w.r.t. the new reference frame
+    # The pose of the source frame w.r.t. the new reference frame
     output_port "source2new_ref_samples", "/base/samples/RigidBodyState"
 
     transformer do
