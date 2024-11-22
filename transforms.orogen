@@ -20,6 +20,8 @@ import_types_from "base"
 task_context "PoseAndTwistFrameChangeRBSTask" do
     needs_configuration
 
+    property "rtk2imu", "/base/Angle"
+
     # The pose+velocity of the source frame w.r.t. the reference frame
     input_port "source2ref_samples", "/base/samples/RigidBodyState"
 

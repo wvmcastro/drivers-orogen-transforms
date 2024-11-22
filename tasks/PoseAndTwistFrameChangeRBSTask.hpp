@@ -39,6 +39,8 @@ need to be provided
             const ::base::samples::RigidBodyState &source2ref_rbs
         );
 
+        Eigen::Quaterniond m_rtk2imu;
+
     public:
         /** TaskContext constructor for PoseAndTwistFrameChangeRBSTask
          * \param name Name of the task. This name needs to be unique to make it identifiable via nameservices.

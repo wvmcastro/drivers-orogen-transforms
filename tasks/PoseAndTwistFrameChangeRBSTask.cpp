@@ -15,7 +15,7 @@ PoseAndTwistFrameChangeRBSTask::~PoseAndTwistFrameChangeRBSTask()
 }
 
 void PoseAndTwistFrameChangeRBSTask::source2ref_samplesTransformerCallback(
-    const base::Time &ts, const ::base::samples::RigidBodyState &source2ref_rbs
+    const base::Time &ts, const ::base::samples::RigidBodyState &source2ref_rbs_const
 )
 {
     Eigen::Affine3d source2target_pose;
@@ -23,6 +23,8 @@ void PoseAndTwistFrameChangeRBSTask::source2ref_samplesTransformerCallback(
         return;
     }
 
+    base::samples::RigidBodyState source2ref_rbs = source2ref_rbs_const;
+    source2ref_rbs.orientation = source2ref_rbs.orientation * m_rtk2imu;
     Eigen::Affine3d source2ref = source2ref_rbs;
     auto source2ref_rot = source2ref.rotation();
     Eigen::Affine3d target2ref = source2ref * source2target_pose.inverse();
@@ -52,6 +54,8 @@ bool PoseAndTwistFrameChangeRBSTask::configureHook()
 {
     if (! PoseAndTwistFrameChangeRBSTaskBase::configureHook())
         return false;
+
+    m_rtk2imu = Eigen::AngleAxisd(_rtk2imu.get().getRad(), Eigen::Vector3d::UnitZ());
     return true;
 }
 bool PoseAndTwistFrameChangeRBSTask::startHook()
